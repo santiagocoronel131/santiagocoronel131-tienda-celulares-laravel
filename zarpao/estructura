@@ -1,0 +1,97 @@
+tu-tienda-celulares/
+├── app/                      # Lógica de la aplicación
+│   ├── Http/                 # Controladores, Middleware, Requests
+│   │   ├── Controllers/      # Controladores
+│   │   │   ├── HomeController.php
+│   │   │   ├── ProductController.php
+│   │   │   ├── CartController.php
+│   │   │   ├── OrderController.php
+│   │   │   ├── AuthController.php  # Para autenticación de usuarios
+│   │   │   ├── AdminController.php # Panel de administración
+│   │   │   ├── AdminProductController.php # Gestion de productos (Admin)
+│   │   │   ├── AdminOrderController.php # Gestion de pedidos (Admin)
+│   │   │   └── AdminPaymentController.php # Gestion de pagos (Admin)
+│   │   ├── Middleware/       # Middleware (autenticación, roles)
+│   │   │   ├── AdminMiddleware.php # Verifica si el usuario es administrador
+│   │   ├── Requests/         # Clases para validar las peticiones
+│   │   └── ...
+│   ├── Models/              # Modelos (representación de las tablas de la base de datos)
+│   │   ├── Product.php
+│   │   ├── Category.php
+│   │   ├── Order.php
+│   │   ├── OrderItem.php
+│   │   ├── User.php          # Si tienes autenticación
+│   │   ├── Payment.php       # Registro de pagos
+│   │   └── ...
+│   ├── Services/            # Lógica de negocio compleja
+│   │   ├── ShippingService.php # Para calcular costos de envío (siempre gratuito)
+│   │   ├── PaymentService.php # Integración con pasarelas de pago
+│   │   └── ...
+│   └── ...
+├── database/                # Migraciones, Seeders, Factories
+│   ├── migrations/          # Archivos de migración
+│   │   ├── 2023_10_27_create_products_table.php
+│   │   ├── 2023_10_27_create_categories_table.php
+│   │   ├── 2023_10_27_create_orders_table.php
+│   │   ├── 2023_10_27_create_order_items_table.php
+│   │   ├── 2023_10_27_create_payments_table.php # Tabla para registrar pagos
+│   │   └── ...
+│   ├── seeders/             # Seeders
+│   │   ├── ProductSeeder.php
+│   │   ├── CategorySeeder.php
+│   │   └── ...
+│   ├── factories/           # Factories
+│   │   ├── ProductFactory.php
+│   │   ├── CategoryFactory.php
+│   │   └── ...
+│   └── ...
+├── public/                  # Archivos públicos
+│   ├── css/
+│   ├── js/
+│   ├── img/
+│   └── ...
+├── resources/               # Vistas, Lenguajes, Assets
+│   ├── views/               # Plantillas Blade
+│   │   ├── layouts/         # Plantillas de diseño
+│   │   │   └── app.blade.php
+│   │   ├── home.blade.php   # Página principal (productos)
+│   │   ├── products/        # Vistas de productos
+│   │   │   ├── index.blade.php  # Listado de productos
+│   │   │   ├── show.blade.php   # Detalle de un producto
+│   │   ├── cart/            # Vistas del carrito
+│   │   │   ├── index.blade.php
+│   │   ├── orders/          # Vistas de pedidos (usuarios)
+│   │   │   ├── index.blade.php
+│   │   │   ├── show.blade.php
+│   │   ├── admin/           # Vistas del panel de administración
+│   │   │   ├── dashboard.blade.php # Panel principal
+│   │   │   ├── products/        # Gestión de productos
+│   │   │   │   ├── index.blade.php
+│   │   │   │   ├── create.blade.php
+│   │   │   │   ├── edit.blade.php
+│   │   │   ├── orders/          # Gestión de pedidos
+│   │   │   │   ├── index.blade.php
+│   │   │   │   ├── show.blade.php
+│   │   │   ├── payments/       # Gestión de pagos
+│   │   │   │   ├── index.blade.php
+│   │   │   │   ├── show.blade.php
+│   │   ├── auth/            # Vistas de autenticación
+│   │   │   ├── login.blade.php
+│   │   │   ├── register.blade.php
+│   │   └── ...
+│   ├── lang/
+│   ├── sass/
+│   └── ...
+├── routes/                  # Definición de las rutas
+│   ├── web.php              # Rutas para el frontend y admin
+│   ├── api.php              # Rutas para la API (opcional)
+│   └── console.php          # Rutas para comandos de consola
+├── storage/                 # Archivos generados
+├── tests/                   # Pruebas
+├── .env                     # Archivo de configuración
+├── .gitignore               # Archivos a ignorar en Git
+├── artisan                  # Script de consola
+├── composer.json            # Dependencias
+├── composer.lock            # Versiones exactas de las dependencias
+├── package.json             # Dependencias de JavaScript
+└── webpack.mix.js           # Configuración de webpack

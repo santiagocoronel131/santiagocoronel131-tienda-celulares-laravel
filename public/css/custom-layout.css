@@ -1,0 +1,35 @@
+/* public/css/custom-layout.css */
+
+/* Estilo principal para la tarjeta de perfil */
+.profile-card {
+    width: 288px; /* 18rem */
+    height: 112px; /* 7rem */
+}
+
+/* Estilo para el círculo del ícono/imagen */
+.profile-icon-circle {
+    width: 56px;  /* 3.5rem */
+    height: 56px; /* 3.5rem */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px; /* Tamaño del icono de Font Awesome */
+    color: white;
+    text-decoration: none;
+    background-image: linear-gradient(to right, #F9C97C, #A2E9C1);
+    transition: transform 0.3s ease, background-image 0.3s ease;
+}
+
+.profile-icon-circle:hover {
+    transform: scale(1.1);
+    background-image: linear-gradient(to right, #C9A9E9, #7EE7FC);
+    color: white; /* Mantenemos el color del icono */
+}
+
+/* Estilos para el texto con gradiente (opcional pero le da el toque) */
+.gradient-text {
+    background-image: linear-gradient(to left, #005BC4, #27272A);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}

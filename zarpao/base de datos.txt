@@ -1,0 +1,131 @@
+Aquí tienes el diseño de la base de datos detallado para tu tienda online, considerando las funcionalidades que hemos definido (productos, categorías, pedidos, usuarios, pagos, administración). Incluye los campos esenciales para cada tabla, tipos de datos y relaciones entre ellas.
+
+1. users (Usuarios)
+
+id (BIGINT, PRIMARY KEY, AUTO_INCREMENT): Identificador único del usuario.
+
+name (VARCHAR(255)): Nombre del usuario.
+
+email (VARCHAR(255), UNIQUE): Correo electrónico del usuario (debe ser único).
+
+password (VARCHAR(255)): Contraseña del usuario (hasheada).
+
+role (ENUM('user', 'admin'), DEFAULT 'user'): Rol del usuario (usuario normal o administrador).
+
+address (TEXT, NULLABLE): Dirección del usuario.
+
+phone (VARCHAR(20), NULLABLE): Número de teléfono del usuario.
+
+created_at (TIMESTAMP): Fecha de creación del registro.
+
+updated_at (TIMESTAMP): Fecha de última actualización del registro.
+
+2. categories (Categorías)
+
+id (BIGINT, PRIMARY KEY, AUTO_INCREMENT): Identificador único de la categoría.
+
+name (VARCHAR(255)): Nombre de la categoría.
+
+description (TEXT, NULLABLE): Descripción de la categoría.
+
+created_at (TIMESTAMP): Fecha de creación del registro.
+
+updated_at (TIMESTAMP): Fecha de última actualización del registro.
+
+3. products (Productos)
+
+id (BIGINT, PRIMARY KEY, AUTO_INCREMENT): Identificador único del producto.
+
+category_id (BIGINT, FOREIGN KEY referencing categories.id): Identificador de la categoría a la que pertenece el producto.
+
+name (VARCHAR(255)): Nombre del producto.
+
+description (TEXT): Descripción del producto.
+
+price (DECIMAL(10, 2)): Precio del producto.
+
+stock (INT): Cantidad de productos en stock.
+
+image_url (VARCHAR(255)): URL de la imagen del producto.
+
+created_at (TIMESTAMP): Fecha de creación del registro.
+
+updated_at (TIMESTAMP): Fecha de última actualización del registro.
+
+4. orders (Pedidos)
+
+id (BIGINT, PRIMARY KEY, AUTO_INCREMENT): Identificador único del pedido.
+
+user_id (BIGINT, FOREIGN KEY referencing users.id): Identificador del usuario que realizó el pedido.
+
+order_date (TIMESTAMP): Fecha en que se realizó el pedido.
+
+total_amount (DECIMAL(10, 2)): Monto total del pedido.
+
+status (ENUM('pending', 'processing', 'shipped', 'completed', 'cancelled'), DEFAULT 'pending'): Estado del pedido.
+
+address (TEXT): Dirección de envío del pedido.
+
+created_at (TIMESTAMP): Fecha de creación del registro.
+
+updated_at (TIMESTAMP): Fecha de última actualización del registro.
+
+5. order_items (Ítems del Pedido)
+
+id (BIGINT, PRIMARY KEY, AUTO_INCREMENT): Identificador único del ítem del pedido.
+
+order_id (BIGINT, FOREIGN KEY referencing orders.id): Identificador del pedido al que pertenece el ítem.
+
+product_id (BIGINT, FOREIGN KEY referencing products.id): Identificador del producto que se incluye en el pedido.
+
+quantity (INT): Cantidad del producto en el pedido.
+
+unit_price (DECIMAL(10, 2)): Precio unitario del producto en el momento del pedido.
+
+created_at (TIMESTAMP): Fecha de creación del registro.
+
+updated_at (TIMESTAMP): Fecha de última actualización del registro.
+
+6. payments (Pagos)
+
+id (BIGINT, PRIMARY KEY, AUTO_INCREMENT): Identificador único del pago.
+
+order_id (BIGINT, FOREIGN KEY referencing orders.id): Identificador del pedido al que se asocia el pago.
+
+payment_date (TIMESTAMP): Fecha en que se realizó el pago.
+
+amount (DECIMAL(10, 2)): Monto del pago.
+
+payment_method (ENUM('credit_card', 'bank_transfer', 'rapipago'), DEFAULT 'credit_card'): Método de pago utilizado.
+
+transaction_id (VARCHAR(255), NULLABLE): Identificador de la transacción (proporcionado por la pasarela de pago).
+
+status (ENUM('pending', 'completed', 'failed'), DEFAULT 'pending'): Estado del pago.
+
+created_at (TIMESTAMP): Fecha de creación del registro.
+
+updated_at (TIMESTAMP): Fecha de última actualización del registro.
+
+Relaciones entre las Tablas:
+
+users 1:N orders: Un usuario puede realizar múltiples pedidos.
+
+categories 1:N products: Una categoría puede tener múltiples productos.
+
+orders 1:N order_items: Un pedido puede contener múltiples ítems.
+
+products 1:N order_items: Un producto puede aparecer en múltiples ítems de pedido.
+
+orders 1:N payments: Un pedido puede tener múltiples pagos (en caso de pagos parciales).
+
+Consideraciones Adicionales:
+
+Índices: Crea índices en las columnas que se utilizan con frecuencia en las consultas (ej: user_id en orders, category_id en products).
+
+Tipos de Datos: Ajusta los tipos de datos según tus necesidades específicas.
+
+Normalización: Asegúrate de que la base de datos esté normalizada para evitar redundancia de datos y mejorar la integridad.
+
+Migraciones de Laravel: Utiliza las migraciones de Laravel para crear y modificar la estructura de la base de datos de forma controlada.
+
+Este diseño de base de datos te proporcionará una base sólida para construir tu tienda online. Recuerda que puedes adaptarlo y modificarlo según tus necesidades específicas.
