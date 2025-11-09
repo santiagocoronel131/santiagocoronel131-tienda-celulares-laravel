@@ -66,7 +66,7 @@
                             <h5 class="font-weight-bold">${{ number_format($total, 2) }}</h5>
                         </div>
                         <hr>
-                        <a href="#" class="btn btn-primary btn-block">Proceder al Pago</a>
+                        <a href="{{ route('checkout.index') }}" class="btn btn-primary btn-block">Proceder al Pago</a>  
                         <form action="{{ route('cart.clear') }}" method="POST" class="mt-2">
                             @csrf
                             <button type="submit" class="btn btn-outline-danger btn-block">Vaciar Carrito</button>

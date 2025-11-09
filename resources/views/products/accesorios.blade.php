@@ -17,7 +17,10 @@
                                 <p class="card-text">Stock: {{ $product->stock }}</p>
                                 <p class="card-text">Categoría: {{ $product->category ? $product->category->name : 'Sin Categoría' }}</p>
                                 <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary">Ver Detalles</a>
-                                <a href="{{ route('cart.add', $product->id) }}" class="btn btn-success">Agregar al Carrito</a>
+                                <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-4">
+                @csrf
+                <button type="submit" class="btn btn-success">Agregar al Carrito</button>
+            </form>
                             </div>
                         </div>
                     </div>

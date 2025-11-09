@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 
 // Rutas Públicas
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -28,6 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout/address', [CheckoutController::class, 'storeAddress'])->name('checkout.address.store');
+Route::post('/checkout/process', [CheckoutController::class, 'processOrder'])->name('checkout.process');
+Route::get('/order/success/{order}', [CheckoutController::class, 'success'])->name('order.success');
+Route::get('/order/ticket/{order}', [CheckoutController::class, 'downloadTicket'])->name('order.ticket');
 });
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
@@ -47,6 +53,7 @@ Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show'
 Route::middleware('admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
+    Route::delete('/admin/products/{product}/images/{image}', [AdminProductController::class, 'destroyImage'])->name('admin.products.images.destroy');
     // Rutas de Productos (Admin)
     Route::get('/admin/products', [AdminProductController::class, 'index'])->name('admin.products.index');
     Route::get('/admin/products/create', [AdminProductController::class, 'create'])->name('admin.products.create');
