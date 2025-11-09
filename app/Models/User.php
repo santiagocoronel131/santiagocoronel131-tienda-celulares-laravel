@@ -10,6 +10,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
      public function getMapCoordinates(): string
     {
         // Coordenadas [Latitud, Longitud] de las capitales de provincia de Argentina

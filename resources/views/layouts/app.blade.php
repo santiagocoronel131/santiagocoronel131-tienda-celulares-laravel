@@ -36,15 +36,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('products.index') }}">Productos</a>
                         </li>
-                        <li class="nav-item">
-                            <!-- Asegúrate de usar el ID correcto para la categoría -->
-                            <a class="nav-link" href="{{ route('products.celulares') }}">Celulares</a>
-                        </li>
-                        <li class="nav-item">
-                            <!-- Asegúrate de usar el ID correcto para la categoría -->
-                            <a class="nav-link" href="{{ route('products.accesorios') }}">Accesorios</a>
-                        </li>
-                    </ul>
+                        @foreach($categories as $category)
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('products.category', $category->id) }}">{{ $category->name }}</a>
+        </li>
+    @endforeach
 
                     <!-- Buscador en el centro -->
                     <form class="form-inline mx-auto my-2 my-lg-0" action="{{ route('products.search') }}" method="GET">
@@ -74,40 +70,48 @@
                             </li>
                         @else
                             <!-- Si el usuario ESTÁ logueado -->
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @if(Auth::user()->role == 'admin')
-                                        <i class="fas fa-user-shield text-warning"></i>
-                                    @else
-                                        <i class="fas fa-user"></i>
-                                    @endif
-                                    {{ Auth::user()->name }}
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <div class="px-3 py-2 text-center">
-                                        <small class="text-muted">{{ Auth::user()->email }}</small><br>
-                                        <strong class="text-capitalize text-primary">{{ Auth::user()->role }}</strong>
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('profile.index') }}">
-                                        <i class="fas fa-id-card mr-2"></i>Mi Perfil
-                                    </a>
-                                    @if(Auth::user()->role == 'admin')
-                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                            <i class="fas fa-tachometer-alt mr-2"></i>Panel de Admin
-                                        </a>
-                                    @endif
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="fas fa-sign-out-alt mr-2"></i>Salir
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="GET" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
+    <li class="nav-item dropdown">
+        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @if(Auth::user()->role == 'admin')
+                <i class="fas fa-user-shield text-warning"></i>
+            @else
+                <i class="fas fa-user"></i>
+            @endif
+            {{ Auth::user()->name }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <div class="px-3 py-2 text-center">
+                <small class="text-muted">{{ Auth::user()->email }}</small><br>
+                <strong class="text-capitalize text-primary">{{ Auth::user()->role }}</strong>
+            </div>
+            <div class="dropdown-divider"></div>
+            
+            <a class="dropdown-item" href="{{ route('profile.index') }}">
+                <i class="fas fa-id-card mr-2"></i>Mi Perfil
+            </a>
+            
+            <!-- ¡NUEVO ENLACE AÑADIDO! -->
+            <a class="dropdown-item" href="{{ route('profile.orders') }}">
+                <i class="fas fa-box-open mr-2"></i>Mis Órdenes
+            </a>
+
+            @if(Auth::user()->role == 'admin')
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Panel de Admin
+                </a>
+            @endif
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fas fa-sign-out-alt mr-2"></i>Salir
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </div>
+    </li>
+@endguest
                     </ul>
                 </div>
             </div>

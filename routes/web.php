@@ -15,8 +15,7 @@ use App\Http\Controllers\CheckoutController;
 // Rutas Públicas
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/category/celuares', [ProductController::class, 'VerCelulares']) ->name('products.celulares');
-Route::get('/products/category/accesorios', [ProductController::class, 'VerAcesorios']) ->name('products.accesorios');
+Route::get('/products/category/{id}', [ProductController::class, 'showCategory'])->name('products.category');
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
@@ -34,6 +33,7 @@ Route::post('/checkout/address', [CheckoutController::class, 'storeAddress'])->n
 Route::post('/checkout/process', [CheckoutController::class, 'processOrder'])->name('checkout.process');
 Route::get('/order/success/{order}', [CheckoutController::class, 'success'])->name('order.success');
 Route::get('/order/ticket/{order}', [CheckoutController::class, 'downloadTicket'])->name('order.ticket');
+    Route::get('/my-orders', [ProfileController::class, 'orders'])->name('profile.orders');
 });
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
@@ -65,6 +65,6 @@ Route::middleware('admin')->group(function () {
     // Rutas de Pedidos (Admin)
     Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
     Route::get('/admin/orders/{id}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
-
+    Route::post('/admin/orders/{order}/update-status', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
 }
 );

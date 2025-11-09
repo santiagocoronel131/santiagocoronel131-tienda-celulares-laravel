@@ -20,39 +20,14 @@ class ProductController extends Controller
         return view('products.show', compact('product'));
     }
     public function showCategory($id)
-    {
-        // Cargamos la categoría para poder mostrar su nombre en el título
+   {
+        // Busca la categoría por su ID. Si no la encuentra, muestra un error 404.
         $category = Category::findOrFail($id);
         
-        // Obtenemos los productos de esa categoría
-        $products = Product::where('category_id', $id)->paginate(12); // Usar 12 para 4 columnas
+        // Busca todos los productos que pertenecen a esa categoría y los pagina.
+        $products = Product::where('category_id', $id)->paginate(12);
 
-        // Devolvemos la nueva vista y pasamos ambas variables
+        // Devuelve la vista de categoría, pasándole los productos y la categoría.
         return view('products.category', compact('products', 'category'));
-    }
-public function VerAcesorios()
-{
-    $categoryId = 2; // ID de la categoría "Accesorios"
-    $products = Product::where('category_id', $categoryId)->paginate(12);
-    return view('products.accesorios', compact('products'));
-}
-
-public function VerCelulares()
-{
-    $categoryId = 1; // ID de la categoría "Celulares"
-    $products = Product::where('category_id', $categoryId)->paginate(12);
-    return view('products.celulares', compact('products'));
-}
-     public function search(Request $request)
-    {
-        $query = $request->input('query');
-        
-        // Buscamos en el nombre o en la descripción
-        $products = Product::where('name', 'LIKE', "%{$query}%")
-                           ->orWhere('description', 'LIKE', "%{$query}%")
-                           ->paginate(12);
-
-        // Devolvemos la nueva vista de búsqueda
-        return view('products.search', compact('products'));
     }
 }
